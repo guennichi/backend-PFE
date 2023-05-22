@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const passport = require('passport');
 
 // require midlleware
+require('./common/initScript')
 require('./Midlleware/Passport/Bearer')
 // connect to database
 require('./Database/Connect.js');
@@ -26,7 +27,6 @@ app.use(passport.session());
 // Use this if the 4th param is default value(false)
 //job.start()
 // Routes sections
-
 
 
 // Home Route

@@ -17,10 +17,6 @@ const AccountSchema = new Schema({
         type: String,
         required: [true, 'Ce champs est obligatoire'],
     },
-    Pays: {
-        type: String,
-        required: [true, 'Ce champs est obligatoire'],
-    },
     Email: {
         type: String,
         required: [true, 'Ce champs est obligatoire'],
@@ -28,6 +24,20 @@ const AccountSchema = new Schema({
     Password: {
         type: String,
         required: [true, 'Ce champs est obligatoire'],
+    },
+    num_passport: {
+        type: String,
+    },
+    date_affectation: {
+        type: Date,
+    },
+    Pays: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pays'
+    },
+    Locale: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Locale'
     },
     Role: {
         type: String,

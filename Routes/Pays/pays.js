@@ -7,10 +7,10 @@ const { getAllpays, getpaysbyid, updatepays, deletePays, addpays } = require('..
 const router = express.Router()
 
 
-router.post('/pays', passport.authenticate('bearer', { session: false }), addpays);
-router.get('/pays', passport.authenticate('bearer', { session: false }), getAllpays);
-router.get('/pays/:id', passport.authenticate('bearer', { session: false }), getpaysbyid)
-router.put('/pays/:id', passport.authenticate('bearer', { session: false }), updatepays)
-router.delete('/pays/:id', passport.authenticate('bearer', { session: false }), deletePays)
+router.post('/pays', addpays);
+router.get('/pays', getAllpays);
+router.get('/pays/:id', getpaysbyid)
+router.put('/pays/:id', updatepays)
+router.delete('/pays/:id', deletePays)
 
 module.exports = router

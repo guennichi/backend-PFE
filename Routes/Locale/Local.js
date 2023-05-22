@@ -7,10 +7,10 @@ const { getAlllocale, getlocalebyid, updatelocale, deletelocale, addlocal } = re
 const router = express.Router()
 
 
-router.post('/local', passport.authenticate('bearer', { session: false }), addlocal);
-router.get('/local', passport.authenticate('bearer', { session: false }), getAlllocale);
-router.get('/local/:id', passport.authenticate('bearer', { session: false }), getlocalebyid)
-router.put('/local/:id', passport.authenticate('bearer', { session: false }), updatelocale)
-router.delete('/local/:id', passport.authenticate('bearer', { session: false }), deletelocale)
+router.post('/local', addlocal);
+router.get('/local', getAlllocale);
+router.get('/local/:id', getlocalebyid)
+router.put('/local/:id', updatelocale)
+router.delete('/local/:id', deletelocale)
 
 module.exports = router

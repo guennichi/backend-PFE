@@ -28,6 +28,21 @@ exports.getuserbyid = async (req, res) => {
     }
 
 }
+exports.addresponsable = async (req, res) => {
+    try {
+        const verif = await User.findOne({ Email: req.body.Email })
+        if (verif) {
+            res.status(400).send({ message: ' User alrady exist' })
+        } else {
+            await User.create(data)
+            res.send({ message: 'responsable added succefully' })
+        }
+    } catch (error) {
+        res.status(500).send({ message: 'error server' })
+        console.log(error)
+    }
+}
+
 exports.updateuser = async (req, res) => {
 
     try {

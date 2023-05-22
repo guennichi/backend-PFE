@@ -7,9 +7,9 @@ const { getAllusers, getuserbyid, updateuser, deleteUser } = require('../../Cont
 const router = express.Router()
 
 
-router.get('/user', passport.authenticate('bearer', { session: false }), getAllusers);
-router.get('/user/:id', passport.authenticate('bearer', { session: false }), getuserbyid)
-router.put('/user/:id', passport.authenticate('bearer', { session: false }), updateuser)
-router.delete('/user/:id', passport.authenticate('bearer', { session: false }), deleteUser)
+router.get('/user', getAllusers);
+router.get('/user/:id', getuserbyid)
+router.put('/user/:id', updateuser)
+router.delete('/user/:id', deleteUser)
 
 module.exports = router

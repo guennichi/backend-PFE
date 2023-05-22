@@ -7,11 +7,11 @@ const { getAllresponsable, getresponsablebyid, updateresponsable, deleteResponsa
 
 const router = express.Router()
 
-router.post('/responsable', passport.authenticate('bearer', { session: false }), addresponsable);
-router.get('/responsable', passport.authenticate('bearer', { session: false }), getAllresponsable);
-router.get('/responsable/:id', passport.authenticate('bearer', { session: false }), getresponsablebyid)
-router.put('/responsable/:id', passport.authenticate('bearer', { session: false }), updateresponsable)
-router.delete('/responsable/:id', passport.authenticate('bearer', { session: false }), deleteResponsable)
+router.post('/responsable', addresponsable);
+router.get('/responsable', getAllresponsable);
+router.get('/responsable/:id', getresponsablebyid)
+router.put('/responsable/:id', updateresponsable)
+router.delete('/responsable/:id', deleteResponsable)
 
 
 
