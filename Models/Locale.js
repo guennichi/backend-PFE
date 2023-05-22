@@ -1,8 +1,5 @@
-
-
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
 
 const LocaleSchema = new Schema({
     Nom: {
@@ -19,9 +16,6 @@ const LocaleSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Responsable'
     }],
-
-
-
 
 }, { timestamps: true, versionKey: false });
 

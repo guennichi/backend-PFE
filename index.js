@@ -7,7 +7,7 @@ const passport = require('passport');
 
 // require midlleware
 require('./common/initScript')
-require('./Midlleware/Passport/Bearer')
+require('./Passport/Bearer')
 // connect to database
 require('./Database/Connect.js');
 
@@ -35,12 +35,12 @@ app.get('/', async (req, res) => {
 });
 
 app.use('/api/v1', require('./Routes/MigrationRoute'))
-app.use('/api/v1', require('./Routes/Auth/AuthRoutes'))
-app.use('/api/v1', require('./Routes/Affectation/Affectation'))
-app.use('/api/v1', require('./Routes/Locale/Local'))
-app.use('/api/v1', require('./Routes/Pays/pays'))
-app.use('/api/v1', require('./Routes/User/user'))
-app.use('/api/v1', require('./Routes/Responsable/Responsable'))
+app.use('/api/v1', require('./Routes/AuthRoutes'))
+app.use('/api/v1', require('./Routes/Affectation'))
+app.use('/api/v1', require('./Routes/Local'))
+app.use('/api/v1', require('./Routes/pays'))
+app.use('/api/v1', require('./Routes/user'))
+app.use('/api/v1', require('./Routes/Responsable'))
 
 // End route section
 
