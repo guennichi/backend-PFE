@@ -9,19 +9,15 @@ exports.addlocal = async (req, res) => {
         if (verif) {
             res.status(400).send({ message: 'locale already exist' })
         } else {
-            const Pays = await PaysModel.findOne({ nom: req.body.pays })
-            const data = {
-                Nom: req.body.Nom,
-                Adresse: req.body.Adresse,
-                Pays: req.body.pays
-            }
-            const newlocal = await Locale.create(data)
+            const Pays = await PaysModel.findOne({ nom: req.body.Pays })
+            console.log(Pays);
+            const newlocal = await Locale.create(req.body)
             await PaysModel.findByIdAndUpdate(Pays._id, { $push: { Locales: newlocal._id } })
             res.status(200).send({ message: 'locale added succefully' })
         }
 
     } catch (error) {
-        res.status(500).send({ message: 'error server' })
+        res.status(500).send({ message: error.message || 'erruer serveur ' })
         console.log(error)
     }
 }
@@ -30,10 +26,10 @@ exports.getAlllocale = async (req, res) => {
 
     try {
         const locale = await Locale.find()
-        res.send({ message: 'locales :  ', locale })
+        res.send(locale)
 
     } catch (error) {
-        res.status(500).send({ message: 'erruer serveur ' || error })
+        res.status(500).send({ message: error.message || 'erruer serveur ' })
     }
 
 }
@@ -41,10 +37,10 @@ exports.getAlllocale = async (req, res) => {
 exports.getlocalebyid = async (req, res) => {
 
     try {
-        const locale = await Locale.findById(req.params.id).populate('Responsable')
-        res.status(200).send({ message: 'locale ', locale })
+        const locale = await Locale.findById(req.params.id).populate('Responsables')
+        res.status(200).send(locale)
     } catch (error) {
-        res.status(500).send({ message: 'erruer serveur ' || error })
+        res.status(500).send({ message: error.message || 'erruer serveur ' })
 
     }
 
@@ -56,7 +52,7 @@ exports.updatelocale = async (req, res) => {
         const updated = await Locale.findById(req.params.id)
         res.status(200).send({ message: 'locale has been updated ', updated })
     } catch (error) {
-        res.status(500).send({ message: 'erruer serveur ' || error })
+        res.status(500).send({ message: error.message || 'erruer serveur ' })
 
     }
 
@@ -68,6 +64,6 @@ exports.deletelocale = async (req, res) => {
         res.status(200).send({ message: 'locale has been deleted ', deleted })
 
     } catch (error) {
-        res.status(500).send({ message: 'erruer serveur ' || error })
+        res.status(500).send({ message: error.message || 'erruer serveur ' })
     }
 }

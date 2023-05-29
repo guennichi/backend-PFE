@@ -15,10 +15,10 @@ const PaysSchema = new Schema({
     couleur_drapeau: {
         type: String,
     },
-    Réligion: {
+    Religion: {
         type: String,
     },
-    popilisation: {
+    populisation: {
         type: Number,
     },
     taux_de_migration: {

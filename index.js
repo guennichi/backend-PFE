@@ -2,9 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
-
+const multer = require('multer');
 const passport = require('passport');
+const File = require('./Models/fileManager');
 
+const upload = multer({ dest: 'upload/' });
 // require midlleware
 require('./common/initScript')
 require('./Passport/Bearer')
@@ -35,12 +37,37 @@ app.get('/', async (req, res) => {
 });
 
 app.use('/api/v1', require('./Routes/MigrationRoute'))
+app.use('/api/v1', require('./Routes/fileManager'))
 app.use('/api/v1', require('./Routes/AuthRoutes'))
 app.use('/api/v1', require('./Routes/Affectation'))
 app.use('/api/v1', require('./Routes/Local'))
 app.use('/api/v1', require('./Routes/pays'))
 app.use('/api/v1', require('./Routes/user'))
 app.use('/api/v1', require('./Routes/Responsable'))
+app.post('/api/v1/upload', upload.single('file'), (req, res) => {
+    // Save the file details to the database
+
+    try {
+
+        const file = {
+            name: req.file.originalname,
+            path: req.file.path,
+            size: req.file.size,
+
+        };
+
+        File.create(file)
+        res.send({ message: 'uploaded ' })
+    } catch (error) {
+        res.status(500).send({ message: 'erreur serveur ' })
+
+
+    }
+
+
+
+});
+
 
 // End route section
 

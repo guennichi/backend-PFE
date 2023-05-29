@@ -1,5 +1,6 @@
 
-const User = require('../Models/Account')
+const User = require('../Models/Account');
+const bcrypt = require('bcryptjs')
 
 exports.getAllusers = async (req, res) => {
 
@@ -34,6 +35,8 @@ exports.adduser = async (req, res) => {
         if (verif) {
             res.status(400).send({ message: ' User already exist' })
         } else {
+            const salt = bcrypt.genSaltSync(10);
+            req.body.Password = bcrypt.hashSync(req.body.Password, salt);
             await User.create(req.body)
             res.send({ message: 'User added succefully' })
         }
@@ -43,8 +46,9 @@ exports.adduser = async (req, res) => {
 }
 
 exports.updateuser = async (req, res) => {
-
     try {
+        const salt = bcrypt.genSaltSync(10);
+        req.body.Password = bcrypt.hashSync(req.body.Password, salt);
         await User.findByIdAndUpdate(req.params.id, req.body)
         const updateduser = await User.findById(req.params.id)
         res.status(200).send({ message: 'user has been updated ', update: updateduser })
