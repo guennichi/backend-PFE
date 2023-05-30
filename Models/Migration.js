@@ -1,23 +1,20 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
 const MigrationSchema = new Schema({
-    Annee: {
-        type: Number,
-    },
-    Genre: {
+    Nationality: {
         type: String,
     },
-    Age: {
-        type: Number,
-    },
-    Nombre: {
+    NumberOfMigrants: {
         type: String,
     },
+    Migrants: {
+        type: String,
+    },
+    fichier: Buffer
 
 }, {
-    timestamps: true
+    timestamps: true, versionKey: false
 },);
 
 const migrationModel = mongoose.model('migration', MigrationSchema);

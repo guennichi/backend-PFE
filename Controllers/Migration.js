@@ -1,77 +1,44 @@
 const Migration = require('../Models/Migration')
-
+const path = require('path');
+const excelTojson = require('convert-excel-to-json');
+const fs = require('fs-extra');
 
 exports.getdata = async (req, res) => {
-
-
     try {
         const data = await Migration.find()
         if (data.length == 0) {
-            res.status(200).send({ message: 'no data has been found try yto insert new data ' })
-
+            res.send({ message: 'no data has been found try yto insert new data ' })
         } else {
             res.status(200).send({ message: 'this is list of my migartion', data: data })
-
         }
     } catch (error) {
-        res.status(500).send({ message: error.message || 'erruer serveur ' })
+        res.status(500).send({ message: error.message || 'erruer serveur' })
     }
 
 
 }
 
-exports.adddata = async (req, res) => {
-
-
+exports.addData = async (req, res) => {
     try {
-        const data = await Migration.create(req.body)
-        res.status(200).send({ message: 'data has been uploded ' })
+        if (req.file?.filename == null || req.file?.filename == 'undefined') {
+            res.status(400).json('No File');
+        } else {
+            // var filePath = path.resolve('./uploads/' + req.file.filename);
+            const excelData = excelTojson({
+                sourceFile: path.resolve('./uploads/' + req.file.filename),
+                header: {
+                    rows: 1,
+                },
+                columnToKey: {
+                    '*': '{{columnHeader}}'
+                },
+            });
+
+            await Migration.insertMany(excelData['Feuil1'])
+            res.status(200).json({ message: 'Added successfully' })
+        }
     } catch (error) {
-        res.status(500).send({ message: error.message || 'erruer serveur ' })
-    }
-
-}
-exports.findbyAge = async (req, res) => {
-
-
-    try {
-        const dataAge = await Migration.find({ Age: req.body.Age })
-        res.status(200).send(dataAge)
-    } catch (error) {
-        res.status(500).send({ message: error.message || 'erruer serveur ' })
-        console.log(error)
-    }
-}
-exports.findbyGenre = async (req, res) => {
-
-
-    try {
-        const dataGenre = await Migration.find({ Genre: req.body.Genre })
-        res.status(200).send(dataGenre)
-    } catch (error) {
-        res.status(500).send({ message: error.message || 'erruer serveur ' })
-        console.log(error)
-    }
-}
-exports.findbyAnnee = async (req, res) => {
-
-
-    try {
-        const dataAnnee = await Migration.find({ Annee: req.body.Annee })
-        res.status(200).send(dataAnnee)
-    } catch (error) {
-        res.status(500).send({ message: error.message || 'erruer serveur ' })
-        console.log(error)
-    }
-}
-exports.findbyNombre = async (req, res) => {
-
-
-    try {
-        const dataNombre = await Migration.find({ Nombre: req.body.Nombre })
-        res.status(200).send(dataNombre)
-    } catch (error) {
-        res.status(500).send({ message: error.message || 'erruer serveur ' })
-        console.log(error)
+        console.log(error);
+        res.status(500).send({ message: 'erreur serveur ' })
     }
 }
