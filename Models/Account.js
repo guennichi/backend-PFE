@@ -34,6 +34,13 @@ const AccountSchema = new Schema({
         type: String,
         required: [true, 'Ce champs est obligatoire'],
         default: 'Admin'
-    }
+    },
+
+    Status: {
+        type: Boolean,
+        required: [true, 'Ce champs est obligatoire'],
+        default: true
+    },
+
 }, { timestamps: true, versionKey: false })
 module.exports = mongoose.model('Accounts', AccountSchema)

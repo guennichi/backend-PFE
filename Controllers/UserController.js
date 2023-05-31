@@ -54,17 +54,27 @@ exports.updateuser = async (req, res) => {
         res.status(200).send({ message: 'user has been updated ', update: updateduser })
     } catch (error) {
         res.status(500).send({ message: 'erruer serveur ' || error })
-
     }
-
 }
-exports.deleteUser = async (req, res) => {
+
+exports.changeStatus = async (req, res) => {
     try {
-
-        const deleted = await User.findByIdAndDelete(req.params.id)
-        res.status(200).send({ message: 'user has been deleted ', deleted })
-
+        const user = await User.findByIdAndUpdate(req.params.id)
+        await User.findByIdAndUpdate(req.params.id, { Status: user.Status ? false : true }, { new: true })
+        res.send({ message: 'user has been updated ' })
     } catch (error) {
-        res.status(500).send({ message: 'erruer serveur ' || error })
+        res.status(500).send({ message: error || 'erruer serveur ' })
     }
 }
+
+
+// exports.deleteUser = async (req, res) => {
+//     try {
+
+//         const deleted = await User.findByIdAndDelete(req.params.id)
+//         res.status(200).send({ message: 'user has been deleted ', deleted })
+
+//     } catch (error) {
+//         res.status(500).send({ message: 'erruer serveur ' || error })
+//     }
+// }

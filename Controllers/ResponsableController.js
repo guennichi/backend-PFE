@@ -8,9 +8,9 @@ const Responsable = require("../Models/Responsable")
 exports.addresponsable = async (req, res) => {
     try {
 
-        const verif = await Responsable.findOne({ Nom: req.body.Nom })
+        const verif = await Responsable.findOne({ EmailRespo: req.body.EmailRespo })
         if (verif) {
-            res.status(400).send({ message: ' responsable alrady exist' })
+            res.status(400).send({ message: 'responsable alrady exist' })
         } else {
 
             const added = await Responsable.create(req.body)
@@ -64,5 +64,15 @@ exports.deleteResponsable = async (req, res) => {
 
     } catch (error) {
         res.status(500).send({ message: error.message || 'erruer serveur ' })
+    }
+
+}
+exports.changeStatus = async (req, res) => {
+    try {
+        const responsable = await Responsable.findByIdAndUpdate(req.params.id)
+        await Responsable.findByIdAndUpdate(req.params.id, { Status: responsable.Status ? false : true }, { new: true })
+        res.send({ message: 'user has been updated ' })
+    } catch (error) {
+        res.status(500).send({ message: error || 'erreur serveur ' })
     }
 }

@@ -26,6 +26,11 @@ const ResponsableSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Locale'
     },
+    Status: {
+        type: Boolean,
+        required: [true, 'Ce champs est obligatoire'],
+        default: true
+    },
 
 
 

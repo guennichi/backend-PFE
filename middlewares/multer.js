@@ -11,24 +11,12 @@ const storage = multer.diskStorage({
     }
 });
 
-
-
-// this code goes inside the object passed to multer()
-function fileFilter(req, file, cb) {
-    // Allowed ext
-    console.log(file);
-    const filetypes = /csv|xlsx|xls/;
-    // Check ext
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    console.log(extname);
-    // Check mime
-    // const mimetype = filetypes.test(file.mimetype);
-    if (extname) {
-        return cb(null, true);
-    } else {
-        cb(new multer.MulterError("LIMIT_UNEXPECTED_FILE"), false);
-    }
+const fileFilter = (req, file, cb) => {
+    const allowedFileExtensions = ['.xls', '.xlsx', '.csv']
+    const extension = path.extname(file.originalname);
+    cb(null, allowedFileExtensions.includes(extension));
 }
+
 
 // inside multer({}), file upto only 1MB can be uploaded
 const uploadFile = multer({

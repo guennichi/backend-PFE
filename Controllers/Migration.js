@@ -20,8 +20,9 @@ exports.getdata = async (req, res) => {
 
 exports.addData = async (req, res) => {
     try {
+        console.log(req.file);
         if (req.file?.filename == null || req.file?.filename == 'undefined') {
-            res.status(400).json('No File');
+            res.status(400).json({ message: 'Le fichier doit etre de type csv/xlsx/xls !' });
         } else {
             // var filePath = path.resolve('./uploads/' + req.file.filename);
             const excelData = excelTojson({
@@ -33,12 +34,10 @@ exports.addData = async (req, res) => {
                     '*': '{{columnHeader}}'
                 },
             });
-
             await Migration.insertMany(excelData['Feuil1'])
-            res.status(200).json({ message: 'Added successfully' })
+            res.json({ message: 'Added successfully' })
         }
     } catch (error) {
-        console.log(error);
         res.status(500).send({ message: 'erreur serveur ' })
     }
 }
